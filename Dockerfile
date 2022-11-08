@@ -34,5 +34,5 @@ RUN mkdir -p ${ANDROID_HOME} && \
     rm android_tools.zip
 
 #Accept android sdk licences
-RUN yes | sdkmanager --licenses
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 
