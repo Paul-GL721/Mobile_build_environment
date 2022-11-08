@@ -5,13 +5,16 @@ pipeline {
 			label 'buildnode'
 		}		
 	}
+	environment {
+        HOME = '.'
+	}
 	stages {
 		stage('test cordova environment') {
 			steps {
 				echo 'Hello cordova'
 				sh 'node -v'
 				sh 'npm -v'
-				sh 'cordova -v'				
+				sh 'cordova --version'				
 			}
 		}
 
