@@ -3,10 +3,6 @@ FROM ubuntu:20.04
  
 MAINTAINER paul@paulgobero.com
 
-RUN useradd -ms /bin/bash jenkinsagent1
-USER jenkinsagent1
-WORKDIR /home/jenkinsagent1
-
 RUN apt-get update && \
     apt-get install -yq tzdata && \
     ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime && \
