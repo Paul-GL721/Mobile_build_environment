@@ -8,11 +8,11 @@ pipeline {
 	
 	stages {
 		stage('test cordova environment') {
+			environment {
+				// Override HOME to WORKSPACE
+		        HOME = "${WORKSPACE}"
+			}
 			steps {
-				environment {
-					// Override HOME to WORKSPACE
-			        HOME = "${WORKSPACE}"
-				}
 				echo 'Hello cordova'
 				sh 'node -v'
 				sh 'npm -v'
