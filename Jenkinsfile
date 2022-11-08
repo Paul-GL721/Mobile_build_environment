@@ -10,6 +10,7 @@ pipeline {
 			steps {
 				echo 'Hello cordova'
 				sh 'node -v'
+				sh 'npm -v'
 				sh 'cordova -v'				
 			}
 		}
