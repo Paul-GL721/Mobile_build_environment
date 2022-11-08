@@ -36,3 +36,5 @@ RUN mkdir -p ${ANDROID_HOME} && \
 #Accept android sdk licences
 RUN yes | tools/bin/sdkmanager --licenses || true
 
+RUN chmod -R 777 ${ANDROID_HOME}
+
