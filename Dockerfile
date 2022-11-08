@@ -2,6 +2,8 @@
 FROM ubuntu:20.04
  
 MAINTAINER paul@paulgobero.com
+
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
  
 #Install curl, git, software-properties-common, python
 RUN apt-get update && apt-get install -y software-properties-common curl python git 
