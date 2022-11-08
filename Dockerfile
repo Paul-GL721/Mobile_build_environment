@@ -11,7 +11,11 @@ RUN apt-get update && \
 #Install curl, git, software-properties-common, python
 RUN apt-get update && apt-get install -y software-properties-common curl python git 
 
-#Install nodejs, cordova
+#Install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &&\
 apt-get install -y nodejs
+
+#Install cordova
 RUN npm install -g cordova
+
+RUN chmod 777 /home/jenkinsagent1/.config/configstore/ /home/jenkinsagent1/.config/configstore/insight-yo.json

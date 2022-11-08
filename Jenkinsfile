@@ -9,8 +9,8 @@ pipeline {
 		stage('test cordova environment') {
 			steps {
 				echo 'Hello cordova'
-				sh 'cordova -v'
 				sh 'node -v'
+				sh 'cordova -v'				
 			}
 		}
 
