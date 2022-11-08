@@ -26,7 +26,7 @@ pipeline {
 		stage('build cordova application') {
 			steps {
 				echo 'Building cordova appliication'
-				sh '${ANDROID_HOME}/tools/bin/sdkmanager --version'
+				sh '${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root'
 			}
 		}
 	}
