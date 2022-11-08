@@ -17,8 +17,3 @@ apt-get install -y nodejs
 
 #Install cordova
 RUN npm install -g cordova
-
-#RUN mkdir -p /root/.config/configstore
-#RUN chmod g+rwx /root /root/.config /root/.config/configstore
-
-#RUN chmod 777 /home/jenkinsagent1/.config/configstore/ /home/jenkinsagent1/.config/configstore/insight-yo.json

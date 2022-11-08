@@ -15,7 +15,8 @@ pipeline {
 				echo 'Hello cordova'
 				sh 'node -v'
 				sh 'npm -v'
-				sh 'cordova --version'				
+				sh 'cordova --version'
+				sh 'Java --version'				
 			}
 		}
 
