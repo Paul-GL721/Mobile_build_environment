@@ -6,7 +6,8 @@ pipeline {
 		}		
 	}
 	environment {
-        HOME = '.'
+		// Override HOME to WORKSPACE
+        HOME = "${WORKSPACE}"
 	}
 	stages {
 		stage('test cordova environment') {
