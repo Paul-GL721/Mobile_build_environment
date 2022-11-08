@@ -1,4 +1,4 @@
-//pipeline to automatically build cordova build environment
+//pipeline to automatically create a cordova_mobile application build environment
 pipeline {
 	agent {
 		label 'buildnode'
