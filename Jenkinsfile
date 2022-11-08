@@ -1,8 +1,9 @@
 //pipeline to automatically create a cordova_mobile application build environment
 pipeline {
-	agent {
-		dockerfile true
-		label 'buildnode'
+	agent { 
+		dockerfile {
+			label 'buildnode'
+		}		
 	}
 	stages {
 		stage('test cordova environment') {
