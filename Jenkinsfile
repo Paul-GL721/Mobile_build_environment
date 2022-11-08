@@ -19,7 +19,7 @@ pipeline {
 				//list java_home
 				sh 'update-alternatives --list java'
 				sh 'java --version'
-				sh '${ANDROID_HOME}/tools/bin/sdkmanager --list'
+				sh 'tools/bin/sdkmanager --list'
 			}
 		}
 
