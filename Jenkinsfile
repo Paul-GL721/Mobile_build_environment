@@ -1,7 +1,7 @@
 //pipeline to automatically build cordova build environment
 pipeline {
 	agent {
-
+		label 'buildnode'
 	}
 	stages {
 		stage('test cordova environment') {
