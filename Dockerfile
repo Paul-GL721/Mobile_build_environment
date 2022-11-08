@@ -17,3 +17,6 @@ apt-get install -y nodejs
 
 #Install cordova
 RUN npm install -g cordova
+
+#Install java development kit 
+RUN apt-get update &&  apt-get install -y openjdk-11-jdk wget unzip

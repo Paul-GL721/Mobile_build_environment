@@ -16,7 +16,9 @@ pipeline {
 				sh 'node -v'
 				sh 'npm -v'
 				sh 'cordova --version'
-				sh 'Java --version'				
+				sh 'Java --version'
+				//list java_home
+				sh 'update-alternatives --config java'				
 			}
 		}
 
