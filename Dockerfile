@@ -19,11 +19,12 @@ apt-get install -y nodejs
 RUN npm install -g cordova
 
 #Install java development kit (jdk-11) 
-RUN apt-get update &&  apt-get install -y openjdk-11-jdk wget unzip
+RUN apt-get update &&  apt-get install -y openjdk-11-jdk wget unzip \
+    rm -rf /var/lib/apt/lists/*
 
 #Set JAVA and ANDROID_HOME environment variables
-#ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java
-ENV ANDROID_HOME=/opt/android-sdk-linux
+#ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+ENV ANDROID_HOME /opt/android-sdk-linux
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
 
 #Install android sdk
