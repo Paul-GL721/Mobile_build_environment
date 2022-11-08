@@ -5,13 +5,14 @@ pipeline {
 			label 'buildnode'
 		}		
 	}
-	environment {
-		// Override HOME to WORKSPACE
-        HOME = "${WORKSPACE}"
-	}
+	
 	stages {
 		stage('test cordova environment') {
 			steps {
+				environment {
+					// Override HOME to WORKSPACE
+			        HOME = "${WORKSPACE}"
+				}
 				echo 'Hello cordova'
 				sh 'node -v'
 				sh 'npm -v'
@@ -19,13 +20,13 @@ pipeline {
 				//list java_home
 				sh 'update-alternatives --list java'
 				sh 'java --version'
-				sh 'tools/bin/sdkmanager --list'
 			}
 		}
 
 		stage('build cordova application') {
 			steps {
 				echo 'Building cordova appliication'
+				sh '${ANDROID_HOME}/tools/bin/sdkmanager --list'
 			}
 		}
 	}
