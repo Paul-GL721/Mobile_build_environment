@@ -24,7 +24,7 @@ pipeline {
 		stage('build cordova application') {
 			steps {
 				echo 'Building cordova appliication'
-				echo %JAVA_HOME%           
+				sh '%JAVA_HOME%'           
                 //make the script-files executables                
                 sh 'chmod +x ./jenkins-scripts/build-step.sh'
 			}
