@@ -19,7 +19,9 @@ pipeline {
 			steps {
 				echo 'Building cordova appliication'         
                 //make the script-files executables                
-                sh 'chmod +x ./jenkins-scripts/build-step.sh'
+		            sh 'chmod +x ./jenkins-scripts/build-step.sh'
+                //run script file
+                    sh './jenkins-scripts/build-step.sh'
 			}
 		}
 	}
