@@ -1,4 +1,6 @@
 #!/bin/bash
 
-#create cordova application
-cordova create hello com.example.hello HelloWorld
+### CHECK DOCKER VERSIONS ###
+docker-compose --version
+docker version
+echo Uisng docker-compose to build...

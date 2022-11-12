@@ -1,13 +1,7 @@
 //pipeline to automatically create a cordova_mobile application build environment
 pipeline {
-	agent { 
-		dockerfile {
-			label 'buildnode'
-		}		
-	}
-	environment {
-		// Override HOME to WORKSPACE
-	    HOME = "${WORKSPACE}"
+	agent { 	
+		label 'buildnode'		
 	}	
 	stages {
 		stage('test cordova environment') {
@@ -16,15 +10,14 @@ pipeline {
 				sh 'node -v'
 				sh 'npm -v'
 				sh 'cordova --version'
-				sh 'java --version'
+				//sh 'java --version'
 				//sh '${ANDROID_HOME}/tools/bin/sdkmanager --licenses'
 			}
 		}
 
 		stage('build cordova application') {
 			steps {
-				echo 'Building cordova appliication'
-				sh '%JAVA_HOME%'           
+				echo 'Building cordova appliication'         
                 //make the script-files executables                
                 sh 'chmod +x ./jenkins-scripts/build-step.sh'
 			}
