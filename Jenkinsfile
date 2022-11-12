@@ -7,9 +7,9 @@ pipeline {
 		stage('test cordova environment') {
 			steps { //list cordova envirionment variables
 				echo 'Hello cordova'
-				#sh 'node --version'
-				#sh 'npm -v'
-				#sh 'cordova --version'
+				//sh 'node --version'
+				//sh 'npm -v'
+				//sh 'cordova --version'
 				//sh 'java --version'
 				//sh '${ANDROID_HOME}/tools/bin/sdkmanager --licenses'
 			}
