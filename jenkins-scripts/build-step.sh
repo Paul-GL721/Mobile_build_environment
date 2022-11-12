@@ -6,4 +6,4 @@ docker version
 echo Builing the docker container...
 
 #Build from the current context
-docker build . -t 570829005182.dkr.ecr.eu-west-1.amazonaws.com/Mobile_build_environment:cordova-$VERSION
+docker build . -t 570829005182.dkr.ecr.eu-west-1.amazonaws.com/mobile_build_environment:cordova-$VERSION
