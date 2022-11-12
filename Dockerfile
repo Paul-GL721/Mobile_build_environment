@@ -1,5 +1,10 @@
 #Build this image on top of Ubuntu v20.04
 FROM ubuntu:20.04
+
+#Build arguments
+ARG ANDROID_TOOLS_VERSION=6200805
+ARG ANDROID_PLATFORM_VERSION=29
+ARG ANDROID_BUILD_TOOLS_VERSION=29.0.3
  
 MAINTAINER paul@paulgobero.com
 
@@ -27,25 +32,17 @@ RUN echo cordova --version
 #Install java development kit (jdk-8) 
 RUN apt-get update &&  apt-get install -y openjdk-8-jdk wget unzip 
 
-ARG ANDROID_TOOLS_VERSION=6200805
-ARG ANDROID_PLATFORM_VERSION=29
-ARG ANDROID_BUILD_TOOLS_VERSION=29.0.3
-
 #Set JAVA and ANDROID_HOME environment variables
 #ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 ENV ANDROID_HOME $HOME/Android/Sdk
 ENV ANDROID_SDK_ROOT $HOME/Android/Sdk
-#ENV PATH ${PATH}:${ANDROID_SDK_ROOT}/tools:${ANDROID_SDK_ROOT}/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:
-ENV GRADLE_HOME $HOME/gradle
-ENV PATH $PATH:$HOME/gradle/gradle-7.5.1/bin
-
-
 ENV ANDROID_SDK_FILE_NAME commandlinetools-linux-${ANDROID_TOOLS_VERSION}_latest.zip
 ENV ANDROID_SDK_URL https://dl.google.com/android/repository/${ANDROID_SDK_FILE_NAME}
-#ENV ANDROID_HOME /opt/android-sdk-linux
 ENV ANDROID_SDK ${ANDROID_HOME}
 ENV ANDROID_BUILD_TOOLS ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_BUILD_TOOLS}
+ENV GRADLE_HOME $HOME/gradle
+#ENV PATH $PATH:$HOME/gradle/gradle-7.5.1/bin
 
 # Install requirements
 RUN apt-get -y update && \
