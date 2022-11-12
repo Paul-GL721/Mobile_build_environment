@@ -3,4 +3,6 @@
 ### CHECK DOCKER VERSIONS ###
 docker-compose --version
 docker version
-echo Uisng docker-compose to build...
+echo Builing the docker container...
+
+docker build .
