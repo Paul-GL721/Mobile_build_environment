@@ -9,4 +9,4 @@ echo Builing the docker container...
 docker build . -t 570829005182.dkr.ecr.eu-west-1.amazonaws.com/mobile_build_environment:cordova-$VERSION
 
 #Push image to ecr repository
-docker push
+docker push 570829005182.dkr.ecr.eu-west-1.amazonaws.com/mobile_build_environment:cordova-$VERSION
