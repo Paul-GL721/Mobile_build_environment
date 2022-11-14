@@ -15,7 +15,7 @@ RUN apt-get update && \
     dpkg-reconfigure -f noninteractive tzdata
  
 #Install curl, git, software-properties-common, python
-RUN apt-get update && apt-get install -y software-properties-common curl python git jq
+RUN apt-get update && apt-get install -y software-properties-common curl python git jq firefox
 
 #Install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &&\
