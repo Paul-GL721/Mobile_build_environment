@@ -14,6 +14,8 @@ RUN apt-get update && \
     ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata 
 
+RUN apt-get update && apt-get install -y software-properties-common curl python git 
+
 #Install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs
