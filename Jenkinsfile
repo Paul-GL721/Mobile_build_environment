@@ -7,7 +7,6 @@ pipeline {
 	    VERSION="1.0.${BUILD_NUMBER}"
     }	
 	stages {
-
 		stage('build cordova application') {
 			steps {
 				echo 'Building cordova appliication'         
