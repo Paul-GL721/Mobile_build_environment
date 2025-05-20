@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set timezone
 RUN apt-get update && \
     apt-get install -yq tzdata && \
-    ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime && \
+    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
 # Install essential packages
