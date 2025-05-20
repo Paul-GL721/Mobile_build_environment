@@ -1,23 +1,24 @@
 #Build this image on top of Ubuntu v20.04
 FROM ubuntu:20.04
 
-#Build arguments
-ARG ANDROID_TOOLS_VERSION=6200805
-ARG ANDROID_PLATFORM_VERSION=29
-ARG ANDROID_BUILD_TOOLS_VERSION=29.0.3
+# Build arguments
+ARG ANDROID_TOOLS_VERSION=9477386
+ARG ANDROID_PLATFORM_VERSION=32
+ARG ANDROID_BUILD_TOOLS_VERSION=32.0.0
 
 MAINTAINER paul@paulgobero.com
 
 #Change time zone
 RUN apt-get update && \
     apt-get install -yq tzdata && \
-    ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata 
+    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
 
-RUN apt-get update && apt-get install -y software-properties-common curl python git 
+# Install base dependencies
+RUN apt-get update && apt-get install -y software-properties-common curl python git wget unzip
 
-#Install nodejs
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+# Install Node.js 20 (latest LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
 #Check that node and npm are installed
@@ -27,9 +28,9 @@ RUN echo npm -v
 #Install cordova and check if available
 RUN npm install -g cordova
 RUN echo cordova --version
-
-#Install java development kit (jdk-8) 
-RUN apt-get update &&  apt-get install -y openjdk-8-jdk wget unzip 
+ 
+# Install OpenJDK 11
+RUN apt-get update && apt-get install -y openjdk-11-jdk
 
 #Set JAVA and ANDROID_HOME environment variables
 #ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
@@ -43,7 +44,7 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}
 ENV GRADLE_HOME $HOME/gradle
 #ENV PATH $PATH:$HOME/gradle/gradle-7.5.1/bin
 
-# Install requirements
+#Install requirements
 RUN apt-get -y update && \
     apt-get -y install && \   
     mkdir -p ${ANDROID_HOME} && \
@@ -56,6 +57,6 @@ RUN apt-get -y update && \
 #Open permissions to android home folder
 RUN chmod -R 777 ${ANDROID_SDK_ROOT}
 
-
+#Install gradle
 RUN mkdir -p ${GRADLE_HOME} && \
     cd ${GRADLE_HOME} && apt-get update && apt-get -y install gradle
