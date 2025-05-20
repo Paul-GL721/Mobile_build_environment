@@ -15,8 +15,8 @@ RUN apt-get update && \
     dpkg-reconfigure -f noninteractive tzdata 
 
 #Install nodejs
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &&\
-apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
 
 #Check that node and npm are installed
 RUN echo node --version
