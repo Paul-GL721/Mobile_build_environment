@@ -40,19 +40,28 @@ ENV ANDROID_SDK_FILE_NAME commandlinetools-linux-${ANDROID_TOOLS_VERSION}_latest
 ENV ANDROID_SDK_URL https://dl.google.com/android/repository/${ANDROID_SDK_FILE_NAME}
 ENV ANDROID_SDK ${ANDROID_HOME}
 ENV ANDROID_BUILD_TOOLS ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_BUILD_TOOLS}
+#ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_BUILD_TOOLS}
+ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}
 ENV GRADLE_HOME $HOME/gradle
 #ENV PATH $PATH:$HOME/gradle/gradle-7.5.1/bin
 
 #Install requirements
 RUN apt-get -y update && \
-    apt-get -y install && \   
-    mkdir -p ${ANDROID_HOME} && \
-    cd ${ANDROID_HOME} && \
-    wget -q ${ANDROID_SDK_URL} && \
-    unzip ${ANDROID_SDK_FILE_NAME} && \
-    rm ${ANDROID_SDK_FILE_NAME} && \
-    yes | sdkmanager --sdk_root=${ANDROID_HOME} "tools" "platforms;android-${ANDROID_PLATFORM_VERSION}" "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" 
+    apt-get -y install && \ 
+    mkdir -p ${ANDROID_HOME}/cmdline-tools && \
+    cd ${ANDROID_HOME}/cmdline-tools && \
+    wget -q ${ANDROID_SDK_URL} -O tools.zip && \
+    unzip tools.zip -d temp && \
+    rm tools.zip && \
+    mv temp/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
+
+# Accept licenses and install required components
+RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses && \
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} \
+    "platform-tools" \
+    "platforms;android-${ANDROID_PLATFORM_VERSION}" \
+    "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
+
 
 #Open permissions to android home folder
 RUN chmod -R 777 ${ANDROID_SDK_ROOT}
