@@ -29,8 +29,12 @@ RUN echo npm -v
 RUN npm install -g cordova
 RUN echo cordova --version
  
-# Install OpenJDK 11
-RUN apt-get update && apt-get install -y openjdk-11-jdk
+# Install OpenJDK 11 (required for api 30 <= 33)
+#RUN apt-get update && apt-get install -y openjdk-11-jdk
+
+# Install OpenJDK 17 (required for Android command line tools >= v11076708)
+RUN apt-get update && apt-get install -y openjdk-17-jdk
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 #Set JAVA and ANDROID_HOME environment variables
 #ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
