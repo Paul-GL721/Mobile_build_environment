@@ -64,7 +64,8 @@ RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDRO
     ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} \
     "platform-tools" \
     "platforms;android-${ANDROID_PLATFORM_VERSION}" \
-    "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
+    "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
+    "build-tools;33.0.2"
 
 
 #Open permissions to android home folder
