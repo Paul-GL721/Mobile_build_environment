@@ -70,6 +70,14 @@ RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDRO
 #Open permissions to android home folder
 RUN chmod -R 777 ${ANDROID_SDK_ROOT}
 
-#Install gradle
+#Install gradle: 
+#RUN mkdir -p ${GRADLE_HOME} && \
+    #cd ${GRADLE_HOME} && apt-get update && apt-get -y install gradle
+
+# Gradle 7.6: this is required for android 12 builds
+ENV GRADLE_VERSION=7.6
 RUN mkdir -p ${GRADLE_HOME} && \
-    cd ${GRADLE_HOME} && apt-get update && apt-get -y install gradle
+    wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -P /tmp && \
+    unzip -d ${GRADLE_HOME} /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
+    rm /tmp/gradle-${GRADLE_VERSION}-bin.zip
+ENV PATH="${GRADLE_HOME}/gradle-${GRADLE_VERSION}/bin:${PATH}"
