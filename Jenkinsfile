@@ -4,7 +4,10 @@ pipeline {
 		label 'buildnode'		
 	}
 	environment {
-	    VERSION="1.0.${BUILD_NUMBER}"
+	    VERSION="1.1.${BUILD_NUMBER}"
+		APIVERSION="34"
+		REMOTE_REPO_NAME='mobile_build_environment'
+		DOCKER_ACCOUNT='paulgl721'
     }	
 	stages {
 		stage('build cordova application') {
