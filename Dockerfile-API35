@@ -1,15 +1,15 @@
-# Default: Android API 34 Jenkins build agent (Linux amd64).
+# Android API 35 Jenkins build agent (Linux amd64).
 # Build from the repository root:
-# docker build --platform linux/amd64 -f Dockerfile-API34 -t android-build:api34 .
+# docker build --platform linux/amd64 -f Dockerfile-API35 -t android-build:api35 .
 FROM node:22-bullseye-slim AS node
 FROM eclipse-temurin:21-jdk-jammy AS sdk-java
 FROM eclipse-temurin:17-jdk-jammy
 
 LABEL org.opencontainers.image.authors="paul@paulgobero.com"
 ARG ANDROID_TOOLS_VERSION=15859902
-ARG ANDROID_PLATFORM_VERSION=34
-ARG ANDROID_BUILD_TOOLS_VERSION=34.0.0
-ARG GRADLE_VERSION=8.7
+ARG ANDROID_PLATFORM_VERSION=35
+ARG ANDROID_BUILD_TOOLS_VERSION=35.0.0
+ARG GRADLE_VERSION=8.13
 ARG CORDOVA_VERSION=12.0.0
 
 # SDK management uses Java 21 even when the application uses Java 17.

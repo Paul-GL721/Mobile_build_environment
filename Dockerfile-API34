@@ -1,4 +1,4 @@
-# Default: Android API 34 Jenkins build agent (Linux amd64).
+# Android API 34 Jenkins build agent (Linux amd64).
 # Build from the repository root:
 # docker build --platform linux/amd64 -f Dockerfile-API34 -t android-build:api34 .
 FROM node:22-bullseye-slim AS node

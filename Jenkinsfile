@@ -5,18 +5,22 @@ pipeline {
 	}
 	environment {
 	    VERSION="1.1.${BUILD_NUMBER}"
-		APIVERSION="34"
 		REMOTE_REPO_NAME='mobile_build_environment'
 		DOCKER_ACCOUNT='paulgl721'
     }	
 	stages {
-		stage('build cordova application') {
+		stage('Build and publish Android images') {
 			steps {
-				echo 'Building cordova appliication'         
-				//make the script-files executables                
-					sh 'chmod +x ./jenkins-scripts/build-step.sh'
-				//run script file
-					sh './jenkins-scripts/build-step.sh'
+				sh '''
+                    set -eu
+                    for dockerfile in Dockerfile-API*; do
+                        if [ ! -f "$dockerfile" ]; then
+                            echo "No API Dockerfiles found" >&2
+                            exit 1
+                        fi
+                        APIVERSION="${dockerfile#Dockerfile-API}" bash ./jenkins-scripts/build-step.sh
+                    done
+                '''
 			}
 		}
 	}

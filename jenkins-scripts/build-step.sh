@@ -1,24 +1,16 @@
 
 #!/bin/bash
+set -euo pipefail
 
-#### CHECK VERSIONS OF DOCKER AND COMPOSE ###
-docker-compose --version
-docker version
-echo "Building the docker image"
+: "${APIVERSION:?APIVERSION is required}"
+: "${DOCKER_ACCOUNT:?DOCKER_ACCOUNT is required}"
+: "${REMOTE_REPO_NAME:?REMOTE_REPO_NAME is required}"
+: "${VERSION:?VERSION is required}"
 
+image="${DOCKER_ACCOUNT}/${REMOTE_REPO_NAME}:cordovaAPI${APIVERSION}-V${VERSION}"
+echo "Building ${image}"
+docker build --platform linux/amd64 -f "Dockerfile-API${APIVERSION}" . -t "${image}"
 
-# Build, tag, and push the image to docker public repository
-docker build . -t ${DOCKER_ACCOUNT}/${REMOTE_REPO_NAME}:cordovaAPI$APIVERSION-V$VERSION 
-
-whoami
-echo usr=$USER
-
-# Switch user and login and push image to docker hub 
-#(credentials are in the pass credsStore) 
-sudo su ubuntu <<HERE
-whoami
-echo usr=$USER
-docker push ${DOCKER_ACCOUNT}/${REMOTE_REPO_NAME}:cordovaAPI$APIVERSION-V$VERSION
-HERE
-
-echo "Docker image pushed successfully to Docker Registry!"
+# Preserve the existing registry authentication under the ubuntu account.
+sudo -H -u ubuntu docker push "${image}"
+echo "Published ${image}"
