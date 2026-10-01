@@ -1,4 +1,6 @@
-# Android build images for Jenkins and local development
+# Android Build Images for Local Development and CI/CD
+
+Use locally, in Jenkins, or in any CI/CD system that supports Docker.
 
 **Spend less time configuring build agents and more time building Android apps.**
 
@@ -6,8 +8,7 @@ Managing Android SDKs, Java, and Gradle across projects takes time. This reposit
 provides Docker images for different Android API levels, with the build tools already
 installed.
 
-Choose the image that matches your project and use it locally, in Jenkins, or in another
-CI/CD system that supports Docker. Build older and newer projects without repeatedly
+Choose the image that matches your project. Build older and newer projects without repeatedly
 reconfiguring your build machine.
 
 ## Quick start
