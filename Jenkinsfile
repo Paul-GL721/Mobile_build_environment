@@ -4,7 +4,7 @@ pipeline {
 		label 'buildnode'		
 	}
 	environment {
-	    VERSION="1.1.${BUILD_NUMBER}"
+	    VERSION="1.2.${BUILD_NUMBER}"
 		REMOTE_REPO_NAME='mobile_build_environment'
 		DOCKER_ACCOUNT='paulgl721'
     }	
