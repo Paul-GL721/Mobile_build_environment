@@ -30,18 +30,28 @@ Browse the [Tags tab](https://hub.docker.com/r/paulgl721/mobile_build_environmen
 
 ## Quick start
 
-**1. Open a terminal** in your Android project folder (macOS or Linux). Docker must be running.
+Start Docker and open a macOS or Linux terminal. Choose the section for your project:
 
-**2. Download the image.** This example uses the published API 34 tag:
+| Project type | Start in the folder containing | Build command |
+| --- | --- | --- |
+| Native Android (for example, Android Studio) | `gradlew` and `settings.gradle` or `settings.gradle.kts` | `bash ./gradlew --no-daemon assembleDebug` |
+| Cordova | `config.xml` and `package.json` | `cordova build android` |
+
+Both examples use the published API 34 image. Choose a different
+[Docker Hub tag](https://hub.docker.com/r/paulgl721/mobile_build_environment/tags)
+if your project requires another Android SDK or Java version.
+
+### Build a native Android app
+
+Start in a native Android project containing `gradlew`, the Gradle Wrapper script
+normally created by Android Studio. You do not install this script separately.
+
+Replace the path below with your project folder, then run:
 
 ```sh
+cd /path/to/your/android-app
 export IMAGE="paulgl721/mobile_build_environment:cordovaAPI34-V1.2.99"
 docker pull --platform linux/amd64 "$IMAGE"
-```
-
-**3. Build a debug APK** in the same terminal:
-
-```sh
 docker run --rm --platform linux/amd64 \
   --user "$(id -u):$(id -g)" \
   -e HOME=/workspace \
@@ -51,9 +61,36 @@ docker run --rm --platform linux/amd64 \
   "$IMAGE" bash ./gradlew --no-daemon assembleDebug
 ```
 
-**Find your APK:** typically `app/build/outputs/apk/debug/`.
+**Find your APK:** typically `app/build/outputs/apk/debug/` in your project folder.
 
-Your files and build outputs stay in your project folder. The temporary container is removed after the build.
+### Build a Cordova app
+
+Use this section for an existing Cordova project with its dependencies and a compatible
+`cordova-android` platform configured. You do not need `gradlew` in your Cordova root
+folder or a separate local installation of Java, Gradle, or the Android SDK.
+
+Replace the path below with the folder containing `config.xml` and `package.json`:
+
+```sh
+cd /path/to/your/cordova-app
+export IMAGE="paulgl721/mobile_build_environment:cordovaAPI34-V1.2.99"
+docker pull --platform linux/amd64 "$IMAGE"
+docker run --rm --platform linux/amd64 \
+  --user "$(id -u):$(id -g)" \
+  -e HOME=/workspace \
+  -e GRADLE_USER_HOME=/workspace/.gradle \
+  -e ANDROID_USER_HOME=/workspace/.android \
+  -e npm_config_cache=/workspace/.npm \
+  -v "$PWD:/workspace" -w /workspace \
+  "$IMAGE" cordova build android
+```
+
+**Find your APK:** typically
+`platforms/android/app/build/outputs/apk/debug/app-debug.apk` in your project folder.
+
+`-v "$PWD:/workspace"` connects your current project folder to the container.
+`-w /workspace` runs the build there. Your files and APK stay on your computer;
+Docker removes the temporary container when the build finishes.
 
 ## Jenkins and compatibility
 

@@ -9,25 +9,53 @@ installed. You can build android applications locally, in Jenkins, or in any CI/
 Choose the image that matches your project. Build older and newer projects without repeatedly
 reconfiguring your build machine.
 
-## Quick start: build a Cordova app
+## Quick start
 
-You need Docker installed and running, a macOS or Linux terminal, and an existing
-Cordova project with its dependencies and Android platform configured. The image
-includes Java, the Android SDK, Gradle, and the Cordova CLI.
+Start Docker and open a macOS or Linux terminal. Choose the section for your project:
 
-This example uses API 34. Choose a compatible image for your project's
-`cordova-android` version from the [Docker Hub tags](https://hub.docker.com/r/paulgl721/mobile_build_environment/tags).
+| Project type | Start in the folder containing | Build command |
+| --- | --- | --- |
+| Native Android (for example, Android Studio) | `gradlew` and `settings.gradle` or `settings.gradle.kts` | `bash ./gradlew --no-daemon assembleDebug` |
+| Cordova | `config.xml` and `package.json` | `cordova build android` |
 
-**1. Open your Cordova project folder.** Use the folder containing `config.xml`
-and `package.json`. Replace the example path with your project's location:
+Both examples use the published API 34 image. Choose a different
+[Docker Hub tag](https://hub.docker.com/r/paulgl721/mobile_build_environment/tags)
+if your project requires another Android SDK or Java version.
+
+### Build a native Android app
+
+Use this section for an existing native Android project. `gradlew` is the project's
+Gradle Wrapper script, normally created by Android Studio; you do not install it
+separately. If your project has no `gradlew`, restore or generate its wrapper before
+using this example.
+
+Replace the path below with your project folder, then run:
+
+```sh
+cd /path/to/your/android-app
+export IMAGE="paulgl721/mobile_build_environment:cordovaAPI34-V1.2.99"
+docker pull --platform linux/amd64 "$IMAGE"
+docker run --rm --platform linux/amd64 \
+  --user "$(id -u):$(id -g)" \
+  -e HOME=/workspace \
+  -e GRADLE_USER_HOME=/workspace/.gradle \
+  -e ANDROID_USER_HOME=/workspace/.android \
+  -v "$PWD:/workspace" -w /workspace \
+  "$IMAGE" bash ./gradlew --no-daemon assembleDebug
+```
+
+**Find your APK:** typically `app/build/outputs/apk/debug/` in your project folder.
+
+### Build a Cordova app
+
+Use this section for an existing Cordova project with its dependencies and a compatible
+`cordova-android` platform configured. You do not need `gradlew` in your Cordova root
+folder or a separate local installation of Java, Gradle, or the Android SDK.
+
+Replace the path below with the folder containing `config.xml` and `package.json`:
 
 ```sh
 cd /path/to/your/cordova-app
-```
-
-**2. Download the image and build your app.** Run these commands in the same terminal:
-
-```sh
 export IMAGE="paulgl721/mobile_build_environment:cordovaAPI34-V1.2.99"
 docker pull --platform linux/amd64 "$IMAGE"
 docker run --rm --platform linux/amd64 \
@@ -36,26 +64,20 @@ docker run --rm --platform linux/amd64 \
   -e GRADLE_USER_HOME=/workspace/.gradle \
   -e ANDROID_USER_HOME=/workspace/.android \
   -e npm_config_cache=/workspace/.npm \
-  -v "$PWD:/workspace" \
-  -w /workspace \
+  -v "$PWD:/workspace" -w /workspace \
   "$IMAGE" cordova build android
 ```
 
-**How Docker connects to your folder:**
+**Find your APK:** typically
+`platforms/android/app/build/outputs/apk/debug/app-debug.apk` in your project folder.
 
-- `$PWD` is your current folder on your computer.
+### How Docker connects to your folder
+
+- `$PWD` is your current project folder on your computer.
 - `-v "$PWD:/workspace"` makes that folder available inside the container as
   `/workspace`. Changes and generated files are saved in your local project.
-- `-w /workspace` runs the build from that folder inside the container.
-- `cordova build android` builds your app from the Cordova project folder.
-
-**3. Find your APK on your computer.** The debug APK is typically saved at:
-
-```text
-platforms/android/app/build/outputs/apk/debug/app-debug.apk
-```
-
-Docker removes the temporary container after the build; your project and APK remain.
+- `-w /workspace` runs the command from that folder inside the container.
+- `--rm` removes the temporary container after the build; your project and APK remain.
 
 ## How the Dockerfiles work
 
@@ -102,7 +124,7 @@ SDK licenses automatically.
 ## Build a custom image (optional)
 
 Skip this section if you are using a published image from Docker Hub. Run these
-commands from this repository's root, rather than your Cordova project folder.
+commands from this repository's root, rather than your application project folder.
 
 ```sh
 docker build --platform linux/amd64 -f Dockerfile-API29 -t android-build:api29 .
@@ -167,6 +189,10 @@ pipeline {
     }
 }
 ```
+
+For a native Android project, replace `cordova build android` in the example above
+with `bash ./gradlew --no-daemon assembleDebug` and check out the folder containing
+`gradlew`.
 
 Jenkins needs the Docker Pipeline plugin and a Docker-capable worker. The SDK is
 readable by arbitrary Jenkins user IDs. Install additional SDK packages during image
